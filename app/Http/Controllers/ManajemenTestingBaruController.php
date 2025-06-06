@@ -45,7 +45,7 @@ class ManajemenTestingBaruController extends Controller
             'modul_key' => $data['modul_key'] ?? null,
             'menu_key' => $data['menu_key'] ?? null,
             'pic_dev' => $data['pic_dev'] ?? null,
-            'test_date' => $data['test_date'] ?? null,
+            'test_date' => empty($data['test_date']) ? null : $data['test_date'],
             'test_scenario' => $data['test_scenario'] ?? null,
             'test_data' => $data['test_data'] ?? null,
             'test_step' => $data['test_step'] ?? null,

@@ -197,7 +197,15 @@
                                 </select>
                             </td>
                             <!-- Test Date: input type date -->
-                            <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="test_date">{{ $testCase->test_date }}</td>
+                            <td class="px-3 py-3 border text-center align-middle" data-field="test_date">
+                                <input
+                                    type="date"
+                                    class="inline-edit-date w-full border rounded px-1 py-0.5 text-sm text-left"
+                                    data-field="test_date"
+                                    value="{{ $testCase->test_date }}"
+                                    style="min-width: 150px;"
+                                />
+                            </td>
 
                             <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="test_scenario">{{ $testCase->test_scenario }}</td>
                             <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="test_data">{{ $testCase->test_data }}</td>
@@ -346,6 +354,10 @@
                         // Ambil semua value dari select dropdown
                         row.querySelectorAll('select.inline-edit-select').forEach(sel => {
                             data[sel.getAttribute('data-field')] = sel.value;
+                        });
+                        // Ambil semua value dari input date
+                        row.querySelectorAll('input.inline-edit-date').forEach(input => {
+                            data[input.getAttribute('data-field')] = input.value;
                         });
                         // Ambil semua value dari contenteditable
                         row.querySelectorAll('[contenteditable="true"]').forEach(cell => {
