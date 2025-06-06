@@ -189,8 +189,9 @@
 
         item.addEventListener('mousemove', function(e) {
             if (document.getElementById('sidebar').classList.contains('sidebar-minimized')) {
-                tooltip.style.left = `${e.pageX + 10}px`;
-                tooltip.style.top = `${e.pageY + 10}px`;
+                // Gunakan clientX dan clientY saja untuk posisi fixed
+                tooltip.style.left = `${e.clientX + 10}px`;
+                tooltip.style.top = `${e.clientY + 10}px`;
             }
         });
 

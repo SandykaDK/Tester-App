@@ -110,14 +110,20 @@
                 </form>
                 <div class="flex items-center space-x-2">
                     <button type="button" id="delete-selected-btn" class="mt-6 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-700 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                         </svg>
                         Hapus
                     </button>
                     <button type="button" id="save-all-btn" class="mt-6 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        <!-- SVG simpan custom -->
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff" class="w-4 h-4 mr-1">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path d="M16.765 2c1.187 0 1.363.06 1.51.168L21.662 4.7a.845.845 0 0 1 .339.677v15.78a.844.844 0 0 1-.844.844H2.844A.844.844 0 0 1 2 21.156V2.844A.844.844 0 0 1 2.844 2zM17 21v-7H7v7zM14 3v3h1V3zM7 3v6h10V3h-1v4h-3V3zM3 21h3v-8h12v8h3V5.452l-3-2.278v6.17a.769.769 0 0 1-.844.656H6.844A.769.769 0 0 1 6 9.344V3H3z"></path>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                            </g>
                         </svg>
                         Simpan
                     </button>
@@ -162,7 +168,7 @@
                             <td class="px-3 py-3 border text-center whitespace-pre-line sticky-col-2" style="min-width:120px;">{{ $testCases->firstItem() + $i }}</td>
                             <!-- Aplikasi dropdown -->
                             <td class="px-3 py-3 border min-w-[220px]" data-field="app_key">
-                                <select class="inline-edit-select w-full border rounded px-1 py-0.5 text-sm min-w-[210px]" data-field="app_key">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] app-select" data-field="app_key">
                                     <option value="">- Pilih -</option>
                                     @foreach($applications as $app)
                                         <option value="{{ $app->id }}" {{ $testCase->app_key == $app->id ? 'selected' : '' }}>{{ $app->app_name }}</option>
@@ -171,25 +177,25 @@
                             </td>
                             <!-- Modul dropdown -->
                             <td class="px-3 py-3 border min-w-[220px]" data-field="modul_key">
-                                <select class="inline-edit-select w-full border rounded px-1 py-0.5 text-sm min-w-[210px]" data-field="modul_key">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] modul-select" data-field="modul_key" data-selected="{{ $testCase->modul_key }}">
                                     <option value="">- Pilih -</option>
                                     @foreach($modules as $modul)
-                                        <option value="{{ $modul->id }}" {{ $testCase->modul_key == $modul->id ? 'selected' : '' }}>{{ $modul->modul_name }}</option>
+                                        <option value="{{ $modul->id }}" data-app-id="{{ $modul->application_id }}" {{ $testCase->modul_key == $modul->id ? 'selected' : '' }}>{{ $modul->modul_name }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <!-- Menu dropdown -->
                             <td class="px-3 py-3 border min-w-[320px] min-w-\[320px\]" data-field="menu_key">
-                                <select class="inline-edit-select w-full border rounded px-1 py-0.5 text-sm min-w-[310px] min-w-\[310px\]" data-field="menu_key">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[310px] min-w-\[310px\] menu-select" data-field="menu_key" data-selected="{{ $testCase->menu_key }}">
                                     <option value="">- Pilih -</option>
                                     @foreach($menus as $menu)
-                                        <option value="{{ $menu->id }}" {{ $testCase->menu_key == $menu->id ? 'selected' : '' }}>{{ $menu->menu_name }}</option>
+                                        <option value="{{ $menu->id }}" data-modul-id="{{ $menu->modul_id }}" {{ $testCase->menu_key == $menu->id ? 'selected' : '' }}>{{ $menu->menu_name }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <!-- PIC Dev dropdown -->
                             <td class="px-3 py-3 border min-w-[200px]" data-field="pic_dev">
-                                <select class="inline-edit-select w-full border rounded px-1 py-0.5 text-sm min-w-[190px]" data-field="pic_dev">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[190px]" data-field="pic_dev">
                                     <option value="">- Pilih -</option>
                                     @foreach($developers as $dev)
                                         <option value="{{ $dev->id }}" {{ $testCase->pic_dev == $dev->id ? 'selected' : '' }}>{{ $dev->dev_name }}</option>
@@ -200,7 +206,7 @@
                             <td class="px-3 py-3 border text-center align-middle" data-field="test_date">
                                 <input
                                     type="date"
-                                    class="inline-edit-date w-full border rounded px-1 py-0.5 text-sm text-left"
+                                    class="inline-edit-date w-full border rounded px-1 py-2 text-sm text-left"
                                     data-field="test_date"
                                     value="{{ $testCase->test_date }}"
                                     style="min-width: 150px;"
@@ -214,7 +220,7 @@
                             <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="result">{{ $testCase->result }}</td>
                             <!-- Status From QC dropdown -->
                             <td class="px-3 py-3 border min-w-[180px]" data-field="status_from_qc">
-                                <select class="inline-edit-select w-full border rounded px-1 py-0.5 text-sm min-w-[170px]" data-field="status_from_qc">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[170px]" data-field="status_from_qc">
                                     <option value="">- Pilih -</option>
                                     <option value="open" {{ $testCase->status_from_qc == 'open' ? 'selected' : '' }}>Open</option>
                                     <option value="ready_to_install" {{ $testCase->status_from_qc == 'ready_to_install' ? 'selected' : '' }}>Ready To Install</option>
@@ -231,7 +237,7 @@
                             <td class="px-3 py-3 border min-w-[200px] whitespace-pre-line" contenteditable="true" data-field="note">{{ $testCase->note }}</td>
                             <!-- Status From Dev dropdown -->
                             <td class="px-3 py-3 border min-w-[180px]" data-field="status_from_dev">
-                                <select class="inline-edit-select w-full border rounded px-1 py-0.5 text-sm min-w-[170px]" data-field="status_from_dev">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[170px]" data-field="status_from_dev">
                                     <option value="">- Pilih -</option>
                                     <option value="open" {{ $testCase->status_from_dev == 'open' ? 'selected' : '' }}>Open</option>
                                     <option value="hold" {{ $testCase->status_from_dev == 'hold' ? 'selected' : '' }}>Hold</option>
@@ -502,6 +508,87 @@
                     .catch(() => alert('Terjadi kesalahan saat menghapus data.'));
                 });
             }
+
+            // Inline table: Dependent dropdowns for modul based on aplikasi
+            document.querySelectorAll('#editable-table tbody tr').forEach(function(row) {
+                const appSelect = row.querySelector('.app-select');
+                const modulSelect = row.querySelector('.modul-select');
+                const menuSelect = row.querySelector('.menu-select');
+                if (appSelect && modulSelect) {
+                    // Save all modul options for this row
+                    const allModulOptions = Array.from(modulSelect.querySelectorAll('option'));
+                    // --- FILTER MODUL ON PAGE LOAD ---
+                    const selectedAppId = appSelect.value;
+                    if (selectedAppId) {
+                        modulSelect.innerHTML = '';
+                        modulSelect.appendChild(allModulOptions[0].cloneNode(true)); // "- Pilih -"
+                        allModulOptions.slice(1).forEach(opt => {
+                            if (opt.getAttribute('data-app-id') == selectedAppId) {
+                                modulSelect.appendChild(opt.cloneNode(true));
+                            }
+                        });
+                        // Restore selected value if still available
+                        if ([...modulSelect.options].some(o => o.value == modulSelect.getAttribute('data-selected'))) {
+                            modulSelect.value = modulSelect.getAttribute('data-selected');
+                        } else {
+                            modulSelect.value = '';
+                        }
+                    }
+                    // --- END FILTER MODUL ON PAGE LOAD ---
+
+                    appSelect.addEventListener('change', function() {
+                        const appId = this.value;
+                        modulSelect.innerHTML = '';
+                        modulSelect.appendChild(allModulOptions[0].cloneNode(true)); // "- Pilih -"
+                        allModulOptions.slice(1).forEach(opt => {
+                            if (opt.getAttribute('data-app-id') == appId) {
+                                modulSelect.appendChild(opt.cloneNode(true));
+                            }
+                        });
+                        modulSelect.value = '';
+                        // Reset menu as well
+                        if (menuSelect) {
+                            menuSelect.value = '';
+                        }
+                        modulSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    });
+                }
+                // Menu dropdown: filter by modul
+                if (modulSelect && menuSelect) {
+                    const allMenuOptions = Array.from(menuSelect.querySelectorAll('option'));
+                    // --- FILTER MENU ON PAGE LOAD ---
+                    const selectedModulId = modulSelect.value;
+                    if (selectedModulId) {
+                        menuSelect.innerHTML = '';
+                        menuSelect.appendChild(allMenuOptions[0].cloneNode(true)); // "- Pilih -"
+                        allMenuOptions.slice(1).forEach(opt => {
+                            if (opt.getAttribute('data-modul-id') == selectedModulId) {
+                                menuSelect.appendChild(opt.cloneNode(true));
+                            }
+                        });
+                        // Restore selected value if still available
+                        if ([...menuSelect.options].some(o => o.value == menuSelect.getAttribute('data-selected'))) {
+                            menuSelect.value = menuSelect.getAttribute('data-selected');
+                        } else {
+                            menuSelect.value = '';
+                        }
+                    }
+                    // --- END FILTER MENU ON PAGE LOAD ---
+
+                    modulSelect.addEventListener('change', function() {
+                        const modulId = this.value;
+                        menuSelect.innerHTML = '';
+                        menuSelect.appendChild(allMenuOptions[0].cloneNode(true)); // "- Pilih -"
+                        allMenuOptions.slice(1).forEach(opt => {
+                            if (opt.getAttribute('data-modul-id') == modulId) {
+                                menuSelect.appendChild(opt.cloneNode(true));
+                            }
+                        });
+                        menuSelect.value = '';
+                        menuSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    });
+                }
+            });
         });
 
         // Fungsi showConfirmDeleteModal untuk bulk delete
