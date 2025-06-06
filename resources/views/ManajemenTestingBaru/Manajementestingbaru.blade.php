@@ -349,7 +349,7 @@
                     const rows = document.querySelectorAll('#editable-table tbody tr[data-id]');
                     let promises = [];
                     rows.forEach(row => {
-                        const id = row.getAttribute('data-id');
+                        let id = row.getAttribute('data-id');
                         let data = {};
                         // Ambil semua value dari select dropdown
                         row.querySelectorAll('select.inline-edit-select').forEach(sel => {
@@ -376,8 +376,7 @@
                     });
                     Promise.all(promises)
                         .then(() => {
-                            alert('Semua data berhasil disimpan!');
-                            location.reload();
+                            window.location = window.location.pathname + '?success=1';
                         })
                         .catch(() => alert('Terjadi kesalahan saat menyimpan beberapa data.'));
                 });
