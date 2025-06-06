@@ -27,7 +27,9 @@
                 <button type="button" class="cancel-delete px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">Tidak</button>
                 <form method="POST" action="{{ $action }}" class="inline">
                     @csrf
-                    @method('DELETE')
+                    @if($action !== '#')
+                        @method('DELETE')
+                    @endif
                     <button type="submit" class="px-4 py-2 rounded {{ $buttonClass }}">{{ $buttonText }}</button>
                 </form>
             </div>
@@ -41,12 +43,28 @@
                 var form = modal.querySelector('form');
                 if (form && actionUrl) form.action = actionUrl;
                 modal.classList.remove('hidden');
+                document.body.classList.add('confirm-delete-active');
             };
             // Tombol cancel
             var modal = document.getElementById('{{ $id ?? 'confirmDeleteModal' }}');
             var cancelButton = modal.querySelector('.cancel-delete');
             cancelButton.addEventListener('click', function () {
                 modal.classList.add('hidden');
+                document.body.classList.remove('confirm-delete-active');
+            });
+
+            // Handle submit: jika action "#" atau kosong, gunakan JS (bulk delete)
+            var form = modal.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                if (!form.action || form.action === '#') {
+                    e.preventDefault();
+                    if (typeof window.doBulkDelete === 'function') {
+                        window.doBulkDelete();
+                    }
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('confirm-delete-active');
+                }
+                // Jika ada action URL, biarkan submit normal (untuk single delete)
             });
         });
     </script>

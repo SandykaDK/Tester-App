@@ -107,7 +107,6 @@ Route::middleware('auth')->group(function () {
         ->name('test-cases-new.update');
     Route::delete('/test-cases-new/{id}', [ManajemenTestingBaruController::class, 'destroy'])
         ->name('test-cases-new.destroy');
-    Route::post('/test-cases-new/bulk-delete', [ManajemenTestingBaruController::class, 'bulkDelete'])->name('test-cases-new.bulk-delete');
 });
 
 

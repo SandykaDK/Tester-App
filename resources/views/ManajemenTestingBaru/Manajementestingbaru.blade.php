@@ -30,28 +30,32 @@
             position: sticky;
             left: 0;
             background: #fff;
-            z-index: 2;
+            z-index: 10;
+            border-top: 1px solid #e5e7eb !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            border-left: 1px solid #e5e7eb !important;
+            border-right: 1px solid #e5e7eb !important;
         }
         .sticky-col-2 {
             position: sticky;
-            left: 48px; /* width of first column (checkbox) */
+            left: 44px !important;
             background: #fff;
-            z-index: 2;
+            z-index: 9;
         }
-        /* Adjust for header z-index */
+
         thead .sticky-col, thead .sticky-col-2 {
             z-index: 3;
+            background: #f3f4f6 !important;/
+            opacity: 1 !important;
         }
-        /* Optional: add right border for sticky columns */
         .sticky-col, .sticky-col-2 {
-            box-shadow: 2px 0 0 gray-100;
+            box-shadow: none !important;
         }
-        /* Sidebar always on top */
+
         .sidebar-maximized,
         .sidebar-minimized {
-            z-index: 10 !important;
+            z-index: 11 !important;
         }
-        /* Saat modal konfirmasi hapus aktif, sidebar di belakang overlay */
         body.confirm-delete-active,
         body.confirm-delete-active {
             z-index: 51 !important;
@@ -85,7 +89,6 @@
 
         <x-alert-success />
         <x-alert-failure />
-        <x-confirm-delete />
 
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Manajemen Testing Baru</h1>
@@ -109,12 +112,6 @@
                     </div>
                 </form>
                 <div class="flex items-center space-x-2">
-                    <button type="button" id="delete-selected-btn" class="mt-6 px-3 py-1 bg-red-500 text-white rounded hover:bg-red-700 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                        </svg>
-                        Hapus
-                    </button>
                     <button type="button" id="save-all-btn" class="mt-6 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 flex items-center">
                         <!-- SVG simpan custom -->
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff" class="w-4 h-4 mr-1">
@@ -139,10 +136,10 @@
                 <table id="editable-table" class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                     <thead>
                         <tr class="bg-gray-100 text-xs text-gray-700 uppercase">
-                            <th class="px-2 py-3 border text-center sticky-col bg-gray-100" style="min-width:48px;max-width:48px;width:48px;">
-                                <input type="checkbox" id="select-all-checkbox" />
+                            <th class="border text-center align-middle sticky-col z-10" style="min-width:46px;max-width:46px;width:46px;left:0;">
+                                Aksi
                             </th>
-                            <th class="px-4 py-3 border min-w-[120px] sticky-col-2 bg-gray-100" style="min-width:80px;">No</th>
+                            <th class="px-4 py-3 border min-w-[100px] sticky-col-2" style="min-width:80px;">No</th>
                             <th class="px-4 py-3 border min-w-[220px]">Aplikasi</th>
                             <th class="px-4 py-3 border min-w-[220px]">Modul</th>
                             <th class="px-4 py-3 border min-w-[320px] min-w-\[320px\]">Menu</th>
@@ -162,10 +159,22 @@
                     <tbody>
                         @foreach($testCases as $i => $testCase)
                         <tr data-id="{{ $testCase->id }}">
-                            <td class="px-2 py-3 border text-center sticky-col" style="min-width:48px;max-width:48px;width:48px;">
-                                <input type="checkbox" class="row-checkbox" value="{{ $testCase->id }}" />
+                            <td class="border text-center align-middle sticky-col z-10 bg-white" style="min-width:44px;max-width:44px;width:44px;left:0;">
+                                <div class="flex items-center justify-center h-full">
+                                    <button type="button"
+                                        class="delete-row-btn flex items-center justify-center bg-red-500 hover:bg-red-700 text-white rounded w-7 h-7 focus:outline-none focus:ring-2 focus:ring-red-400"
+                                        data-id="{{ $testCase->id }}" title="Hapus">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" class="w-4 h-4">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path d="M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M18 6V16.2C18 17.8802 18 18.7202 17.673 19.362C17.3854 19.9265 16.9265 20.3854 16.362 20.673C15.7202 21 14.8802 21 13.2 21H10.8C9.11984 21 8.27976 21 7.63803 20.673C7.07354 20.3854 6.6146 19.9265 6.32698 19.362C6 18.7202 6 17.8802 6 16.2V6M14 10V17M10 10V17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                </div>
                             </td>
-                            <td class="px-3 py-3 border text-center whitespace-pre-line sticky-col-2" style="min-width:120px;">{{ $testCases->firstItem() + $i }}</td>
+                            <td class="px-3 py-3 border text-center whitespace-pre-line sticky-col-2 bg-white" style="min-width:120px;">{{ $testCases->firstItem() + $i }}</td>
                             <!-- Aplikasi dropdown -->
                             <td class="px-3 py-3 border min-w-[220px]" data-field="app_key">
                                 <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] app-select" data-field="app_key">
@@ -252,7 +261,6 @@
                             </td>
                         </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
@@ -279,9 +287,13 @@
             const deleteButtons = document.querySelectorAll('.delete-button');
             deleteButtons.forEach(btn => {
                 btn.addEventListener('click', function () {
-                    const action = this.getAttribute('data-action');
+                    // Ambil ID dari data-id atau data-action
+                    const rowId = this.getAttribute('data-id');
+                    if (!rowId) return;
+                    // Simpan ID ke array agar bisa dipakai di doBulkDelete
+                    window.idsToDelete = [rowId];
                     if (typeof window.showConfirmDeleteModal === 'function') {
-                        window.showConfirmDeleteModal(action);
+                        window.showConfirmDeleteModal();
                     }
                 });
             });
@@ -468,47 +480,6 @@
                 });
             }
 
-            // Checkbox select all
-            const selectAll = document.getElementById('select-all-checkbox');
-            if (selectAll) {
-                selectAll.addEventListener('change', function() {
-                    document.querySelectorAll('.row-checkbox').forEach(cb => {
-                        cb.checked = selectAll.checked;
-                    });
-                });
-            }
-
-            // Hapus data terpilih
-            const deleteSelectedBtn = document.getElementById('delete-selected-btn');
-            let idsToDelete = [];
-            if (deleteSelectedBtn) {
-                deleteSelectedBtn.addEventListener('click', function () {
-                    idsToDelete = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(cb => cb.value);
-                    if (idsToDelete.length === 0) {
-                        alert('Pilih data yang ingin dihapus!');
-                        return;
-                    }
-                    if (!confirm('Yakin ingin menghapus data terpilih?')) return;
-                    fetch("{{ route('test-cases-new.bulk-delete') }}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({ ids: idsToDelete })
-                    })
-                    .then(res => res.json())
-                    .then(res => {
-                        if (res.success) {
-                            location.reload();
-                        } else {
-                            alert('Gagal menghapus data!');
-                        }
-                    })
-                    .catch(() => alert('Terjadi kesalahan saat menghapus data.'));
-                });
-            }
-
             // Inline table: Dependent dropdowns for modul based on aplikasi
             document.querySelectorAll('#editable-table tbody tr').forEach(function(row) {
                 const appSelect = row.querySelector('.app-select');
@@ -553,6 +524,7 @@
                         modulSelect.dispatchEvent(new Event('change', { bubbles: true }));
                     });
                 }
+
                 // Menu dropdown: filter by modul
                 if (modulSelect && menuSelect) {
                     const allMenuOptions = Array.from(menuSelect.querySelectorAll('option'));
@@ -589,56 +561,32 @@
                     });
                 }
             });
-        });
 
-        // Fungsi showConfirmDeleteModal untuk bulk delete
-        function showConfirmDeleteModal() {
-            const modal = document.getElementById('confirmDeleteModal');
-            if (!modal) {
-                if (confirm('Yakin ingin menghapus data terpilih?')) doBulkDelete();
-                return;
-            }
-            document.body.classList.add('confirm-delete-active');
-            modal.classList.remove('hidden');
-            // Ganti form submit dengan AJAX
-            const form = modal.querySelector('form');
-            const okBtn = form.querySelector('button[type="submit"]');
-            const cancelBtn = modal.querySelector('.cancel-delete');
-            // Simpan handler agar tidak double
-            if (!form.dataset.bulkHandler) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    doBulkDelete();
-                    modal.classList.add('hidden');
-                    document.body.classList.remove('confirm-delete-active');
+            // Tombol delete per baris
+            document.querySelectorAll('.delete-row-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    if (!id) return;
+                    if (window.confirm('Apakah anda yakin ingin menghapus data ini?')) {
+                        fetch("{{ url('/test-cases-new') }}/" + id, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        })
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.success) {
+                                location.reload();
+                            } else {
+                                alert('Gagal menghapus data!');
+                            }
+                        })
+                        .catch(() => alert('Terjadi kesalahan saat menghapus data.'));
+                    }
                 });
-                form.dataset.bulkHandler = "1";
-            }
-            cancelBtn.addEventListener('click', function () {
-                modal.classList.add('hidden');
-                document.body.classList.remove('confirm-delete-active');
             });
-        }
-
-        function doBulkDelete() {
-            fetch("{{ route('test-cases-new.bulk-delete') }}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ ids: idsToDelete })
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    location.reload();
-                } else {
-                    alert('Gagal menghapus data!');
-                }
-            })
-            .catch(() => alert('Terjadi kesalahan saat menghapus data.'));
-        }
+        });
     </script>
 </body>
 </html>

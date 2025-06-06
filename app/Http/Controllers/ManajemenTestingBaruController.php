@@ -104,13 +104,10 @@ class ManajemenTestingBaruController extends Controller
         return response()->json(['success' => true, 'row' => $row]);
     }
 
-    public function bulkDelete(Request $request)
+    // Tambahkan method destroy
+    public function destroy($id)
     {
-        $ids = $request->input('ids', []);
-        if (!is_array($ids) || empty($ids)) {
-            return response()->json(['success' => false, 'message' => 'No IDs provided.']);
-        }
-        DB::table('test_cases_new')->whereIn('id', $ids)->delete();
-        return response()->json(['success' => true]);
+        $deleted = DB::table('test_cases_new')->where('id', $id)->delete();
+        return response()->json(['success' => $deleted > 0]);
     }
 }
