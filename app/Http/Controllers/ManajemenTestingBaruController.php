@@ -59,6 +59,9 @@ class ManajemenTestingBaruController extends Controller
 
         DB::table('test_cases_new')->where('id', $id)->update($updateData);
 
+        // Set flash session untuk alert sukses (pakai pesan string)
+        session()->flash('success', 'Data berhasil disimpan.');
+
         return response()->json(['success' => true]);
     }
 
@@ -101,6 +104,9 @@ class ManajemenTestingBaruController extends Controller
             ->where('test_cases_new.id', $id)
             ->first();
 
+        // Set flash session untuk alert sukses (pakai pesan string)
+        session()->flash('success', 'Data berhasil ditambahkan.');
+
         return response()->json(['success' => true, 'row' => $row]);
     }
 
@@ -108,6 +114,10 @@ class ManajemenTestingBaruController extends Controller
     public function destroy($id)
     {
         $deleted = DB::table('test_cases_new')->where('id', $id)->delete();
+        // Set flash session untuk alert sukses hapus (pakai pesan string)
+        if ($deleted > 0) {
+            session()->flash('success_delete', 'Data berhasil dihapus.');
+        }
         return response()->json(['success' => $deleted > 0]);
     }
 }

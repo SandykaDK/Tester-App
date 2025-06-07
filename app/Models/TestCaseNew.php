@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TestCaseNew extends Model
 {
     protected $guarded = [];
+    protected $table = 'test_cases_new';
 
     public function application()
     {

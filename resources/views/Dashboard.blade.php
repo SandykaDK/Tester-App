@@ -113,7 +113,7 @@
                                         <span class="font-semibold text-gray-700">Open</span>
                                     </div>
                                 </td>
-                                <td class="py-2 px-4 text-gray-900">{{ $stat_testcase_open ?? 0 }}</td>
+                                <td class="py-2 px-4 text-gray-900">{{ $stat_qc_open ?? 0 }}</td>
                             </tr>
                             <tr>
                                 <td class="py-2 px-4">
@@ -122,7 +122,7 @@
                                         <span class="font-semibold text-gray-700">On Progress</span>
                                     </div>
                                 </td>
-                                <td class="py-2 px-4 text-gray-900">{{ $stat_testcase_onprogress ?? 0 }}</td>
+                                <td class="py-2 px-4 text-gray-900">{{ $stat_qc_onprogress ?? 0 }}</td>
                             </tr>
                             <tr>
                                 <td class="py-2 px-4">
@@ -131,7 +131,7 @@
                                         <span class="font-semibold text-gray-700">Waiting Confirmation</span>
                                     </div>
                                 </td>
-                                <td class="py-2 px-4 text-gray-900">{{ $stat_testcase_waiting ?? 0 }}</td>
+                                <td class="py-2 px-4 text-gray-900">{{ $stat_qc_waiting ?? 0 }}</td>
                             </tr>
                             <tr>
                                 <td class="py-2 px-4">
@@ -140,7 +140,7 @@
                                         <span class="font-semibold text-gray-700">Pass</span>
                                     </div>
                                 </td>
-                                <td class="py-2 px-4 text-gray-900">{{ $stat_testcase_pass ?? 0 }}</td>
+                                <td class="py-2 px-4 text-gray-900">{{ $stat_qc_pass ?? 0 }}</td>
                             </tr>
                             <tr>
                                 <td class="py-2 px-4">
@@ -149,7 +149,7 @@
                                         <span class="font-semibold text-gray-700">Failed</span>
                                     </div>
                                 </td>
-                                <td class="py-2 px-4 text-gray-900">{{ $stat_testcase_failed ?? 0 }}</td>
+                                <td class="py-2 px-4 text-gray-900">{{ $stat_qc_failed ?? 0 }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -194,11 +194,11 @@
                         labels: ['Open', 'On Progress', 'Waiting Confirmation', 'Pass', 'Failed'],
                         datasets: [{
                             data: [
-                                {{ $stat_testcase_open ?? 0 }},
-                                {{ $stat_testcase_onprogress ?? 0 }},
-                                {{ $stat_testcase_waiting ?? 0 }},
-                                {{ $stat_testcase_pass ?? 0 }},
-                                {{ $stat_testcase_failed ?? 0 }}
+                                {{ $stat_qc_open ?? 0 }},
+                                {{ $stat_qc_onprogress ?? 0 }},
+                                {{ $stat_qc_waiting ?? 0 }},
+                                {{ $stat_qc_pass ?? 0 }},
+                                {{ $stat_qc_failed ?? 0 }}
                             ],
                             backgroundColor: [
                                 '#ef4444', // Open

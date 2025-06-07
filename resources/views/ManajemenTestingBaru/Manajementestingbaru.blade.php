@@ -84,9 +84,15 @@
 
     <div class="main-content flex-1 p-6 ml-64 relative z-5">
         {{-- ALERT COMPONENTS --}}
-        <x-testcase.alert-success-testcase />
-        <x-testcase.alert-failure-testcase />
-        <x-testcase.alert-success-delete />
+        @if(session('success'))
+            <x-testcase.alert-success-testcase :message="session('success')" />
+        @endif
+        @if(session('failure'))
+            <x-testcase.alert-failure-testcase :message="session('failure')" />
+        @endif
+        @if(session('success_delete'))
+            <x-testcase.alert-success-delete :message="session('success_delete')" />
+        @endif
         <div class="flex justify-end items-center mb-4">
             <x-profile-section />
         </div>
@@ -395,7 +401,8 @@
                     });
                     Promise.all(promises)
                         .then(() => {
-                            window.location = window.location.pathname + '?success=1';
+                            // Reload tanpa query string agar alert tidak muncul lagi setelah reload berikutnya
+                            window.location.reload();
                         })
                         .catch(() => alert('Terjadi kesalahan saat menyimpan beberapa data.'));
                 });
@@ -597,10 +604,8 @@
                 .then(res => {
                     window.hideConfirmDeleteModal();
                     if (res.success) {
-                        // Redirect ke URL dengan success_delete=1 agar alert delete yang muncul
-                        const url = new URL(window.location.href);
-                        url.searchParams.set('success_delete', '1');
-                        window.location.href = url.toString();
+                        // Reload tanpa query string agar alert tidak muncul lagi setelah reload berikutnya
+                        window.location.reload();
                     } else {
                         alert('Gagal menghapus data!');
                     }
