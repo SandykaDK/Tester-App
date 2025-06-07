@@ -29,7 +29,7 @@
         <div class="flex justify-end items-center mb-4">
             <x-profile-section />
         </div>
-        <div class="bg-white shadow-md rounded-lg p-6 ">
+        <div class="bg-white shadow-md rounded-lg px-6 pt-5 pb-3">
             <h1 class="text-2xl font-bold mb-4">Daftar Modul</h1>
             <x-alert-success />
             <x-alert-failure />
@@ -72,8 +72,8 @@
             <div class="overflow-x-auto">
                 <div class="overflow-y-auto" style="max-height: 400px;">
                     <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-                        <thead class="bg-gray-50">
-                            <tr>
+                        <thead class="bg-gray-50 sticky top-0 z-10">
+                            <tr class="bg-gray-50">
                                 <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                                 <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Modul</th>
                                 <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Aplikasi</th>
@@ -85,9 +85,13 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($modules as $index => $module)
                                 <tr class="hover:bg-gray-100">
-                                    <td class="py-2 px-4 text-sm font-medium text-gray-900">{{ $module->id }}</td>
+                                    <td class="py-2 px-4 text-sm font-medium text-gray-900">
+                                        {{ ($modules->firstItem() ?? 1) + $index }}
+                                    </td>
                                     <td class="py-2 px-4 text-sm font-medium text-gray-900">{{ $module->modul_name }}</td>
-                                    <td class="py-2 px-4 text-sm font-medium text-gray-900">{{ $module->application->app_name }}</td>
+                                    <td class="py-2 px-4 text-sm font-medium text-gray-900">
+                                        {{ $module->application ? $module->application->app_name : '-' }}
+                                    </td>
                                     <td class="py-2 px-4 text-sm text-gray-500">{{ $module->modul_description }}</td>
                                     <td class="py-2 px-4 text-sm text-gray-500">
                                         @if($module->modul_status === 'Not Started')
@@ -120,16 +124,25 @@
             </div>
             <div class="mt-4 flex justify-between items-center">
                 <div>
-                    <label for="items_per_page" class="block text-sm font-medium text-gray-700">Tampilkan</label>
-                    <select id="items_per_page" name="items_per_page" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="location = this.value;">
-                        <option value="{{ request()->fullUrlWithQuery(['items_per_page' => 10]) }}" {{ request('items_per_page') == 10 ? 'selected' : '' }}>10</option>
-                        <option value="{{ request()->fullUrlWithQuery(['items_per_page' => 25]) }}" {{ request('items_per_page') == 25 ? 'selected' : '' }}>25</option>
-                        <option value="{{ request()->fullUrlWithQuery(['items_per_page' => 50]) }}" {{ request('items_per_page') == 50 ? 'selected' : '' }}>50</option>
-                        <option value="{{ request()->fullUrlWithQuery(['items_per_page' => 100]) }}" {{ request('items_per_page') == 100 ? 'selected' : '' }}>100</option>
-                    </select>
+                    <form id="per-page-form" method="GET" action="{{ route('modules.index') }}">
+                        <input type="hidden" name="module_name" value="{{ request('module_name') }}">
+                        <input type="hidden" name="application_name" value="{{ request('application_name') }}">
+                        <input type="hidden" name="modul_status" value="{{ request('modul_status') }}">
+                        <label for="items_per_page" class="block text-[10px] font-medium text-gray-700 leading-tight mb-1">Tampilkan</label>
+                        <select id="items_per_page" name="items_per_page"
+                            class="mt-0 block w-[60px] border border-gray-300 rounded-md shadow-sm py-0.5 px-1.5 text-[11px] focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            onchange="document.getElementById('per-page-form').submit();">
+                            <option value="10" {{ request('items_per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                            <option value="25" {{ request('items_per_page') == 25 ? 'selected' : '' }}>25</option>
+                            <option value="50" {{ request('items_per_page') == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ request('items_per_page') == 100 ? 'selected' : '' }}>100</option>
+                        </select>
+                    </form>
                 </div>
-                <div>
-                    {{ $modules->appends(request()->except('page'))->links() }}
+                <div class="flex flex-col items-end text-[10px] space-y-1">
+                    <div>
+                        {{ $modules->appends(request()->except('page'))->links() }}
+                    </div>
                 </div>
             </div>
         </div>

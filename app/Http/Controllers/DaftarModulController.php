@@ -28,7 +28,11 @@ class DaftarModulController extends Controller
             $query->where('modul_status', $request->modul_status);
         }
 
-        $itemsPerPage = $request->get('items_per_page', 10);
+        // Tambahkan kembali fitur pagination
+        $itemsPerPage = (int) $request->get('items_per_page', 10);
+        if (!in_array($itemsPerPage, [10, 25, 50, 100])) {
+            $itemsPerPage = 10;
+        }
         $modules = $query->paginate($itemsPerPage);
 
         return view('Master.DaftarModul.DaftarModul', compact('modules', 'itemsPerPage'));
