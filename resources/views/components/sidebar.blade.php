@@ -89,6 +89,7 @@
         position: fixed; /* Fix the sidebar position */
         top: 0;
         left: 0;
+        z-index: 20; /* Samakan z-index dengan minimized */
     }
     .sidebar-minimized {
         width: 120px;
@@ -99,7 +100,7 @@
         position: fixed; /* Fix the sidebar position */
         top: 0;
         left: 0;
-        z-index: 9999;
+        z-index: 20; /* Samakan z-index dengan maximized */
     }
     .menu-container {
         flex: 1;

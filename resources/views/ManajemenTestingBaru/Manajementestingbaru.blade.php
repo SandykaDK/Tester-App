@@ -83,13 +83,13 @@
     </div>
 
     <div class="main-content flex-1 p-6 ml-64 relative z-5">
+        {{-- ALERT COMPONENTS --}}
+        <x-testcase.alert-success-testcase />
+        <x-testcase.alert-failure-testcase />
+        <x-testcase.alert-success-delete />
         <div class="flex justify-end items-center mb-4">
             <x-profile-section />
         </div>
-
-        <x-alert-success />
-        <x-alert-failure />
-        <x-alert-success-delete />
 
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Manajemen Testing Baru</h1>
@@ -597,9 +597,9 @@
                 .then(res => {
                     window.hideConfirmDeleteModal();
                     if (res.success) {
-                        // Ganti location.reload() dengan redirect ke URL dengan success=1
+                        // Redirect ke URL dengan success_delete=1 agar alert delete yang muncul
                         const url = new URL(window.location.href);
-                        url.searchParams.set('success', '1');
+                        url.searchParams.set('success_delete', '1');
                         window.location.href = url.toString();
                     } else {
                         alert('Gagal menghapus data!');

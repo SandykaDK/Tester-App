@@ -141,6 +141,7 @@
             </div>
         </div>
     </div>
+
     {{-- Confirm Delete Modal --}}
     <x-confirm-delete/>
     <script src="//unpkg.com/alpinejs" defer></script>

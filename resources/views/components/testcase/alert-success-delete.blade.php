@@ -1,13 +1,13 @@
-@if(session('success_delete'))
+@if(session('success_delete') || request('success_delete') == 1)
     <div id="alert-success-delete" class="fixed top-0 left-0 right-0 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-md mx-auto mt-4 max-w-lg z-50 transition-opacity duration-500 ease-in-out opacity-0" role="alert">
         <div class="flex items-center">
             <svg class="fill-current h-6 w-6 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M9 12l2 2 4-4m5 2A9 9 0 11.999 11 9 9 0 0120 11z"/>
+                <path fill="currentColor" d="M16.707 6.293a1 1 0 00-1.414 0L9 12.586l-2.293-2.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 00-1.414-1.414z"/>
             </svg>
             <div>
-                <strong class="font-bold block mb-1">Deleted!</strong>
+                <strong class="font-bold block mb-1">Success!</strong>
                 <span class="block sm:inline">
-                    {{ session('success_delete') }}
+                    {{ session('success_delete') ?? 'Data berhasil dihapus!' }}
                 </span>
             </div>
         </div>
