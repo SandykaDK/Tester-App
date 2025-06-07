@@ -89,6 +89,7 @@
 
         <x-alert-success />
         <x-alert-failure />
+        <x-alert-success-delete />
 
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Manajemen Testing Baru</h1>
@@ -567,26 +568,51 @@
                 btn.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
                     if (!id) return;
-                    if (window.confirm('Apakah anda yakin ingin menghapus data ini?')) {
-                        fetch("{{ url('/test-cases-new') }}/" + id, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            }
-                        })
-                        .then(res => res.json())
-                        .then(res => {
-                            if (res.success) {
-                                location.reload();
-                            } else {
-                                alert('Gagal menghapus data!');
-                            }
-                        })
-                        .catch(() => alert('Terjadi kesalahan saat menghapus data.'));
+                    // Debug log
+                    console.log('Set idToDelete:', id);
+                    window.idToDelete = id;
+                    if (typeof window.showConfirmDeleteModal === 'function') {
+                        window.showConfirmDeleteModal();
+                    } else {
+                        alert('Konfirmasi hapus tidak tersedia.');
                     }
                 });
             });
+
+            window.confirmDeleteAction = function() {
+                const id = window.idToDelete;
+                if (!id) {
+                    alert('ID data tidak ditemukan!');
+                    return;
+                }
+                // Debug log
+                console.log('Menghapus data dengan id:', id);
+                fetch("{{ url('/test-cases-new') }}/" + id, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(res => res.json())
+                .then(res => {
+                    window.hideConfirmDeleteModal();
+                    if (res.success) {
+                        // Ganti location.reload() dengan redirect ke URL dengan success=1
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('success', '1');
+                        window.location.href = url.toString();
+                    } else {
+                        alert('Gagal menghapus data!');
+                    }
+                })
+                .catch(() => {
+                    window.hideConfirmDeleteModal();
+                    alert('Terjadi kesalahan saat menghapus data.');
+                });
+            };
         });
     </script>
+    {{-- Modal konfirmasi hapus --}}
+    <x-confirm-delete-testing />
 </body>
 </html>

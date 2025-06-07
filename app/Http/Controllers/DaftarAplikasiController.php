@@ -51,7 +51,7 @@ class DaftarAplikasiController extends Controller
             ]);
         }
 
-        return redirect()->route('applications.index')->with('success', 'Application created successfully.');
+        return redirect()->route('applications.index')->with('success', 'Data Aplikasi berhasil disimpan.');
     }
 
     public function edit($id)
@@ -104,7 +104,7 @@ class DaftarAplikasiController extends Controller
             }
         }
 
-        return redirect()->route('applications.index')->with('success', 'Application updated successfully.');
+        return redirect()->route('applications.index')->with('success', 'Data Aplikasi berhasil disimpan.');
     }
 
     public function destroy($id)
@@ -123,6 +123,6 @@ class DaftarAplikasiController extends Controller
             ]);
         }
 
-        return redirect()->route('applications.index')->with('success', 'Application deleted successfully.');
+        return redirect()->route('applications.index')->with('success', 'Data Aplikasi berhasil dihapus.');
     }
 }
