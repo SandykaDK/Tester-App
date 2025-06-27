@@ -245,6 +245,7 @@
                                     <option value="on_progress" {{ $testCase->status_from_qc == 'on_progress' ? 'selected' : '' }}>On Progress</option>
                                     <option value="cancelled_by_user" {{ $testCase->status_from_qc == 'cancelled_by_user' ? 'selected' : '' }}>Cancelled by User</option>
                                     <option value="pass" {{ $testCase->status_from_qc == 'pass' ? 'selected' : '' }}>Pass</option>
+                                    <option value="pass" {{ $testCase->status_from_qc == 'failed' ? 'selected' : '' }}>Failed</option>
                                 </select>
                             </td>
                             <!-- Evidence -->

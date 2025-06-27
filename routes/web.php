@@ -107,6 +107,10 @@ Route::middleware('auth')->group(function () {
         ->name('test-cases-new.update');
     Route::delete('/test-cases-new/{id}', [ManajemenTestingBaruController::class, 'destroy'])
         ->name('test-cases-new.destroy');
+
+    // LAPORAN & STATISTIK
+    Route::get('/laporan-statistik', [\App\Http\Controllers\LaporanController::class, 'index'])
+        ->name('laporan-statistik.index');
 });
 
 
