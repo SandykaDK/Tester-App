@@ -38,7 +38,7 @@
         }
         .sticky-col-2 {
             position: sticky;
-            left: 44px !important;
+            /* left akan diatur inline di bawah sesuai role */
             background: #fff;
             z-index: 9;
         }
@@ -99,25 +99,98 @@
 
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Manajemen Testing Baru</h1>
+
             <div class="mb-4 flex justify-between items-end">
-                <form method="GET" action="{{ route('applications.index') }}" class="flex items-end space-x-4">
-                    <div>
-                        <label for="application_name" class="block text-sm font-medium text-gray-700">Nama Aplikasi</label>
-                        <input type="text" name="app_name" id="application_name" value="{{ request('app_name') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <form method="GET" action="{{ route('test-cases-new.index') }}" class="flex flex-col gap-2 w-full">
+                    <div class="flex flex-wrap gap-2">
+                        <div>
+                            <label for="filter_no" class="block text-xs font-medium text-gray-700">No</label>
+                            <input type="number" name="filter_no" id="filter_no" value="{{ request('filter_no') }}" class="block w-20 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                        </div>
+                        <div>
+                            <label for="filter_app_key" class="block text-xs font-medium text-gray-700">Aplikasi</label>
+                            <select name="filter_app_key" id="filter_app_key" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                                <option value="">Semua</option>
+                                @foreach($applications as $app)
+                                    <option value="{{ $app->id }}" {{ request('filter_app_key') == $app->id ? 'selected' : '' }}>{{ $app->app_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter_modul_key" class="block text-xs font-medium text-gray-700">Modul</label>
+                            <select name="filter_modul_key" id="filter_modul_key" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                                <option value="">Semua</option>
+                                @foreach($modules as $modul)
+                                    <option value="{{ $modul->id }}" {{ request('filter_modul_key') == $modul->id ? 'selected' : '' }}>{{ $modul->modul_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter_menu_key" class="block text-xs font-medium text-gray-700">Menu</label>
+                            <select name="filter_menu_key" id="filter_menu_key" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                                <option value="">Semua</option>
+                                @foreach($menus as $menu)
+                                    <option value="{{ $menu->id }}" {{ request('filter_menu_key') == $menu->id ? 'selected' : '' }}>{{ $menu->menu_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter_pic_dev" class="block text-xs font-medium text-gray-700">PIC Dev</label>
+                            <select name="filter_pic_dev" id="filter_pic_dev" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                                <option value="">Semua</option>
+                                @foreach($developers as $dev)
+                                    <option value="{{ $dev->id }}" {{ request('filter_pic_dev') == $dev->id ? 'selected' : '' }}>{{ $dev->dev_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label for="created_at" class="block text-sm font-medium text-gray-700">Bulan & Tahun</label>
-                        <input type="month" name="created_at" id="created_at" value="{{ request('created_at') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    </div>
-                    <div>
-                        <button type="submit" class="mt-6 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                            </svg>
-                            Cari
-                        </button>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        <div>
+                            <label for="filter_test_date" class="block text-xs font-medium text-gray-700">Test Date</label>
+                            <input type="date" name="filter_test_date" id="filter_test_date" value="{{ request('filter_test_date') }}" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                        </div>
+                        <div>
+                            <label for="filter_status_from_qc" class="block text-xs font-medium text-gray-700">Status From QC</label>
+                            <select name="filter_status_from_qc" id="filter_status_from_qc" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                                <option value="">Semua</option>
+                                <option value="not_started" {{ request('filter_status_from_qc') == 'not_started' ? 'selected' : '' }}>Not Started</option>
+                                <option value="open" {{ request('filter_status_from_qc') == 'open' ? 'selected' : '' }}>Open</option>
+                                <option value="ready_to_install" {{ request('filter_status_from_qc') == 'ready_to_install' ? 'selected' : '' }}>Ready To Install</option>
+                                <option value="hold" {{ request('filter_status_from_qc') == 'hold' ? 'selected' : '' }}>Hold</option>
+                                <option value="re_open" {{ request('filter_status_from_qc') == 're_open' ? 'selected' : '' }}>Re-Open</option>
+                                <option value="on_progress" {{ request('filter_status_from_qc') == 'on_progress' ? 'selected' : '' }}>On Progress</option>
+                                <option value="cancelled_by_user" {{ request('filter_status_from_qc') == 'cancelled_by_user' ? 'selected' : '' }}>Cancelled by User</option>
+                                <option value="pass" {{ request('filter_status_from_qc') == 'pass' ? 'selected' : '' }}>Pass</option>
+                                <option value="failed" {{ request('filter_status_from_qc') == 'failed' ? 'selected' : '' }}>Failed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter_status_from_dev" class="block text-xs font-medium text-gray-700">Status From Dev</label>
+                            <select name="filter_status_from_dev" id="filter_status_from_dev" class="block w-32 border border-gray-300 rounded-md shadow-sm py-1 px-2 text-xs">
+                                <option value="">Semua</option>
+                                <option value="not_started" {{ request('filter_status_from_dev') == 'not_started' ? 'selected' : '' }}>Not Started</option>
+                                <option value="open" {{ request('filter_status_from_dev') == 'open' ? 'selected' : '' }}>Open</option>
+                                <option value="hold" {{ request('filter_status_from_dev') == 'hold' ? 'selected' : '' }}>Hold</option>
+                                <option value="waiting_confirmation" {{ request('filter_status_from_dev') == 'waiting_confirmation' ? 'selected' : '' }}>Waiting Confirmation</option>
+                                <option value="on_progress" {{ request('filter_status_from_dev') == 'on_progress' ? 'selected' : '' }}>On Progress</option>
+                                <option value="re_open" {{ request('filter_status_from_dev') == 're_open' ? 'selected' : '' }}>Re-Open</option>
+                                <option value="ready_to_test" {{ request('filter_status_from_dev') == 'ready_to_test' ? 'selected' : '' }}>Ready To Test</option>
+                                <option value="installed" {{ request('filter_status_from_dev') == 'installed' ? 'selected' : '' }}>Installed</option>
+                                <option value="cancelled_by_user" {{ request('filter_status_from_dev') == 'cancelled_by_user' ? 'selected' : '' }}>Cancelled by User</option>
+                                <option value="closed" {{ request('filter_status_from_dev') == 'closed' ? 'selected' : '' }}>Closed</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end h-full">
+                            <button type="submit" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 text-xs flex items-center mt-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                                Cari
+                            </button>
+                        </div>
                     </div>
                 </form>
+                @if(auth()->user()->role === 'Quality Assurance' || auth()->user()->role === 'Developer')
                 <div class="flex items-center space-x-2">
                     <button type="button" id="save-all-btn" class="mt-6 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-700 flex items-center">
                         <!-- SVG simpan custom -->
@@ -131,22 +204,29 @@
                         </svg>
                         Simpan
                     </button>
+                    @if(auth()->user()->role === 'Quality Assurance')
                     <button type="button" id="add-row-btn" class="mt-6 px-3 py-1 bg-green-500 text-white rounded hover:bg-green-700 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                         Tambah
                     </button>
+                    @endif
                 </div>
+                @endif
             </div>
             <div class="overflow-x-auto">
                 <table id="editable-table" class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                     <thead>
                         <tr class="bg-gray-100 text-xs text-gray-700 uppercase">
+                            @if(auth()->user()->role === 'Quality Assurance')
                             <th class="border text-center align-middle sticky-col z-10" style="min-width:46px;max-width:46px;width:46px;left:0;">
                                 Aksi
                             </th>
-                            <th class="px-4 py-3 border min-w-[100px] sticky-col-2" style="min-width:80px;">No</th>
+                            <th class="px-4 py-3 border min-w-[100px] sticky-col-2" style="min-width:80px;left:44px;">No</th>
+                            @else
+                            <th class="px-4 py-3 border min-w-[100px] sticky-col-2" style="min-width:80px;left:0;">No</th>
+                            @endif
                             <th class="px-4 py-3 border min-w-[220px]">Aplikasi</th>
                             <th class="px-4 py-3 border min-w-[220px]">Modul</th>
                             <th class="px-4 py-3 border min-w-[320px] min-w-\[320px\]">Menu</th>
@@ -166,6 +246,7 @@
                     <tbody>
                         @foreach($testCases as $i => $testCase)
                         <tr data-id="{{ $testCase->id }}">
+                            @if(auth()->user()->role === 'Quality Assurance')
                             <td class="border text-center align-middle sticky-col z-10 bg-white" style="min-width:44px;max-width:44px;width:44px;left:0;">
                                 <div class="flex items-center justify-center h-full">
                                     <button type="button"
@@ -181,10 +262,14 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="px-3 py-3 border text-center whitespace-pre-line sticky-col-2 bg-white" style="min-width:120px;">{{ $testCases->firstItem() + $i }}</td>
+                            <td class="px-3 py-3 border text-center whitespace-pre-line sticky-col-2 bg-white" style="min-width:120px;left:44px;">{{ $testCases->firstItem() + $i }}</td>
+                            @else
+                            <td class="px-3 py-3 border text-center whitespace-pre-line sticky-col-2 bg-white" style="min-width:120px;left:0;">{{ $testCases->firstItem() + $i }}</td>
+                            @endif
                             <!-- Aplikasi dropdown -->
                             <td class="px-3 py-3 border min-w-[220px]" data-field="app_key">
-                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] app-select" data-field="app_key">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] app-select" data-field="app_key"
+                                    @if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer') disabled @endif>
                                     <option value="">- Pilih -</option>
                                     @foreach($applications as $app)
                                         <option value="{{ $app->id }}" {{ $testCase->app_key == $app->id ? 'selected' : '' }}>{{ $app->app_name }}</option>
@@ -193,7 +278,8 @@
                             </td>
                             <!-- Modul dropdown -->
                             <td class="px-3 py-3 border min-w-[220px]" data-field="modul_key">
-                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] modul-select" data-field="modul_key" data-selected="{{ $testCase->modul_key }}">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[210px] modul-select" data-field="modul_key" data-selected="{{ $testCase->modul_key }}"
+                                    @if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer') disabled @endif>
                                     <option value="">- Pilih -</option>
                                     @foreach($modules as $modul)
                                         <option value="{{ $modul->id }}" data-app-id="{{ $modul->application_id }}" {{ $testCase->modul_key == $modul->id ? 'selected' : '' }}>{{ $modul->modul_name }}</option>
@@ -202,7 +288,8 @@
                             </td>
                             <!-- Menu dropdown -->
                             <td class="px-3 py-3 border min-w-[320px] min-w-\[320px\]" data-field="menu_key">
-                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[310px] min-w-\[310px\] menu-select" data-field="menu_key" data-selected="{{ $testCase->menu_key }}">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[310px] min-w-\[310px\] menu-select" data-field="menu_key" data-selected="{{ $testCase->menu_key }}"
+                                    @if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer') disabled @endif>
                                     <option value="">- Pilih -</option>
                                     @foreach($menus as $menu)
                                         <option value="{{ $menu->id }}" data-modul-id="{{ $menu->modul_id }}" {{ $testCase->menu_key == $menu->id ? 'selected' : '' }}>{{ $menu->menu_name }}</option>
@@ -211,7 +298,8 @@
                             </td>
                             <!-- PIC Dev dropdown -->
                             <td class="px-3 py-3 border min-w-[200px]" data-field="pic_dev">
-                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[190px]" data-field="pic_dev">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[190px]"
+                                    data-field="pic_dev" @if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer') disabled @endif>
                                     <option value="">- Pilih -</option>
                                     @foreach($developers as $dev)
                                         <option value="{{ $dev->id }}" {{ $testCase->pic_dev == $dev->id ? 'selected' : '' }}>{{ $dev->dev_name }}</option>
@@ -226,18 +314,30 @@
                                     data-field="test_date"
                                     value="{{ $testCase->test_date }}"
                                     style="min-width: 150px;"
+                                    @if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer') disabled @endif
                                 />
                             </td>
-
-                            <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="test_scenario">{{ $testCase->test_scenario }}</td>
-                            <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="test_data">{{ $testCase->test_data }}</td>
-                            <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="test_step">{{ $testCase->test_step }}</td>
-                            <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="expected_result">{{ $testCase->expected_result }}</td>
-                            <td class="px-3 py-3 border whitespace-pre-line" contenteditable="true" data-field="result">{{ $testCase->result }}</td>
+                            <td class="px-3 py-3 border whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer')false@else true @endif"
+                                data-field="test_scenario">{{ $testCase->test_scenario }}</td>
+                            <td class="px-3 py-3 border whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer')false@else true @endif"
+                                data-field="test_data">{{ $testCase->test_data }}</td>
+                            <td class="px-3 py-3 border whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer')false@else true @endif"
+                                data-field="test_step">{{ $testCase->test_step }}</td>
+                            <td class="px-3 py-3 border whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer')false@else true @endif"
+                                data-field="expected_result">{{ $testCase->expected_result }}</td>
+                            <td class="px-3 py-3 border whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer')false@else true @endif"
+                                data-field="result">{{ $testCase->result }}</td>
                             <!-- Status From QC dropdown -->
                             <td class="px-3 py-3 border min-w-[180px]" data-field="status_from_qc">
-                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[170px]" data-field="status_from_qc">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[170px]" data-field="status_from_qc"
+                                    @if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer') disabled @endif>
                                     <option value="">- Pilih -</option>
+                                    <option value="not_started" {{ $testCase->status_from_qc == 'not_started' ? 'selected' : '' }}>Not Started</option>
                                     <option value="open" {{ $testCase->status_from_qc == 'open' ? 'selected' : '' }}>Open</option>
                                     <option value="ready_to_install" {{ $testCase->status_from_qc == 'ready_to_install' ? 'selected' : '' }}>Ready To Install</option>
                                     <option value="hold" {{ $testCase->status_from_qc == 'hold' ? 'selected' : '' }}>Hold</option>
@@ -249,13 +349,19 @@
                                 </select>
                             </td>
                             <!-- Evidence -->
-                            <td class="px-3 py-3 border min-w-[200px] whitespace-pre-line" contenteditable="true" data-field="evidence">{{ $testCase->evidence }}</td>
+                            <td class="px-3 py-3 border min-w-[200px] whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager' || auth()->user()->role === 'Developer')false@else true @endif"
+                                data-field="evidence">{{ $testCase->evidence }}</td>
                             <!-- Catatan -->
-                            <td class="px-3 py-3 border min-w-[200px] whitespace-pre-line" contenteditable="true" data-field="note">{{ $testCase->note }}</td>
+                            <td class="px-3 py-3 border min-w-[200px] whitespace-pre-line"
+                                contenteditable="@if(auth()->user()->role === 'Project Manager')false@elseif(auth()->user()->role === 'Developer')true@else true @endif"
+                                data-field="note">{{ $testCase->note }}</td>
                             <!-- Status From Dev dropdown -->
                             <td class="px-3 py-3 border min-w-[180px]" data-field="status_from_dev">
-                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[170px]" data-field="status_from_dev">
+                                <select class="inline-edit-select w-full border rounded px-1 py-2 text-sm min-w-[170px]" data-field="status_from_dev"
+                                    @if(auth()->user()->role === 'Project Manager') disabled @endif>
                                     <option value="">- Pilih -</option>
+                                    <option value="not_started" {{ $testCase->status_from_dev == 'not_started' ? 'selected' : '' }}>Not Started</option>
                                     <option value="open" {{ $testCase->status_from_dev == 'open' ? 'selected' : '' }}>Open</option>
                                     <option value="hold" {{ $testCase->status_from_dev == 'hold' ? 'selected' : '' }}>Hold</option>
                                     <option value="waiting_confirmation" {{ $testCase->status_from_dev == 'waiting_confirmation' ? 'selected' : '' }}>Waiting Confirmation</option>
@@ -386,8 +492,11 @@
                             data[input.getAttribute('data-field')] = input.value;
                         });
                         // Ambil semua value dari contenteditable
-                        row.querySelectorAll('[contenteditable="true"]').forEach(cell => {
-                            data[cell.getAttribute('data-field')] = cell.innerText.trim();
+                        row.querySelectorAll('[contenteditable][data-field]').forEach(cell => {
+                            // Gunakan innerHTML.trim() agar linebreak tetap tersimpan, fallback ke innerText jika kosong
+                            let value = cell.innerHTML.trim();
+                            if (value === '') value = cell.innerText.trim();
+                            data[cell.getAttribute('data-field')] = value;
                         });
                         promises.push(
                             fetch(`/test-cases-new/${id}`, {
@@ -621,4 +730,5 @@
     {{-- Modal konfirmasi hapus --}}
     <x-confirm-delete-testing />
 </body>
+</html>
 </html>

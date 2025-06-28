@@ -10,6 +10,8 @@ class AppMenu extends Model
 {
     use HasFactory;
 
+    protected $table = 'app_menus';
+
     protected $guarded = [];
 
     protected static function boot()
@@ -40,6 +42,6 @@ class AppMenu extends Model
 
     public function module()
     {
-        return $this->belongsTo(AppModul::class, 'modul_id', 'id'); // Correct foreign and local keys
+        return $this->belongsTo(AppModul::class, 'modul_id', 'id');
     }
 }

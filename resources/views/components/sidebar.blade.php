@@ -14,8 +14,12 @@
             </a>
         </li>
 
-        {{-- Master: Developer & Admin --}}
-        @if(auth()->user() && (auth()->user()->role === 'Developer' || strtolower(auth()->user()->role) === 'admin'))
+        {{-- Master: Developer, Admin & Project Manager (khusus Daftar Developer untuk Project Manager) --}}
+        @if(auth()->user() && (
+            auth()->user()->role === 'Developer' ||
+            strtolower(auth()->user()->role) === 'admin' ||
+            auth()->user()->role === 'Project Manager'
+        ))
         <li class="mb-4 flex flex-col hover:bg-gray-200 p-3 rounded sidebar-item transition-all duration-300" data-tooltip="Master">
             <a href="#" class="flex items-center w-full main-menu" data-target="submenu-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transition-all duration-300">
@@ -24,28 +28,29 @@
                 <span class="sidebar-content ml-2 transition-all duration-300">Master</span>
             </a>
             <ul id="submenu-2" class="ml-8 mt-2 text-gray-500 hidden submenu list-none transition-all duration-300">
-                <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('applications.index') }}" class="block">Daftar Aplikasi</a></li>
-                <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('modules.index') }}" class="block">Daftar Modul</a></li>
-                <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('menus.index') }}" class="block">Daftar Menu</a></li>
-                <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('developers.index') }}" class="block">Daftar Developer</a></li>
+                @if(strtolower(auth()->user()->role) === 'admin')
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('applications.index') }}" class="block">Daftar Aplikasi</a></li>
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('modules.index') }}" class="block">Daftar Modul</a></li>
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('menus.index') }}" class="block">Daftar Menu</a></li>
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('developers.index') }}" class="block">Daftar Developer</a></li>
+                @elseif(auth()->user()->role === 'Project Manager')
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('developers.index') }}" class="block">Daftar Developer</a></li>
+                @elseif(auth()->user()->role === 'Developer')
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('applications.index') }}" class="block">Daftar Aplikasi</a></li>
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('modules.index') }}" class="block">Daftar Modul</a></li>
+                    <li class="mb-2 hover:bg-gray-300 p-2 rounded"><a href="{{ route('menus.index') }}" class="block">Daftar Menu</a></li>
+                @endif
             </ul>
         </li>
         @endif
 
-        {{-- Manajemen Testing: Quality Assurance & Admin --}}
-        {{-- @if(auth()->user() && (auth()->user()->role === 'Quality Assurance' || strtolower(auth()->user()->role) === 'admin'))
-        <li class="mb-4 flex flex-col hover:bg-gray-200 p-3 rounded sidebar-item transition-all duration-300" data-tooltip="Manajemen Testing">
-            <a href="{{ route('test-cases.index') }}" class="flex items-center w-full main-menu">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transition-all duration-300">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
-                </svg>
-                <span class="sidebar-content ml-2 transition-all duration-300">Manajemen Testing</span>
-            </a>
-        </li>
-        @endif --}}
-
         {{-- Manajemen Testing Baru: Quality Assurance & Admin --}}
-        @if(auth()->user() && (auth()->user()->role === 'Quality Assurance' || strtolower(auth()->user()->role) === 'admin'))
+        @if(auth()->user() && (
+                auth()->user()->role === 'Quality Assurance' ||
+                strtolower(auth()->user()->role) === 'admin' ||
+                auth()->user()->role === 'Developer' ||
+                auth()->user()->role === 'Project Manager'
+            ))
         <li class="mb-4 flex flex-col hover:bg-gray-200 p-3 rounded sidebar-item transition-all duration-300" data-tooltip="Manajemen Testing">
             <a href="{{ route('test-cases-new.index') }}" class="flex items-center w-full main-menu">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transition-all duration-300">
@@ -56,15 +61,15 @@
         </li>
         @endif
 
-        {{-- Upload Screen Format: Semua role --}}
+        {{-- Upload Screen Format: Semua role
         <li class="mb-4 flex flex-col hover:bg-gray-200 p-3 rounded sidebar-item transition-all duration-300" data-tooltip="Screen Format">
-            <a href="{{ route('dashboard') }}" class="flex items-center w-full main-menu" data-target="submenu-1">
+            <a href="{{ route('screen-format.index') }}" class="flex items-center w-full main-menu" data-target="submenu-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 transition-all duration-300">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
                 </svg>
                 <span class="sidebar-content ml-2 transition-all duration-300">Screen Format</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- Laporan & Statistik: Project Manager & Admin --}}
         @if(auth()->user() && (auth()->user()->role === 'Project Manager' || strtolower(auth()->user()->role) === 'admin'))

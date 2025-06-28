@@ -33,7 +33,6 @@
             <h1 class="text-2xl font-bold mb-4">Daftar Modul</h1>
             <x-alert-success />
             <x-alert-failure />
-            <x-confirm-delete />
             <div class="mb-4 flex justify-between items-end">
                 <form method="GET" action="{{ route('modules.index') }}" class="flex items-end space-x-4" id="filter-form" onsubmit="clearFilters()">
                     <div>
@@ -147,6 +146,8 @@
             </div>
         </div>
     </div>
+    {{-- Pindahkan x-confirm-delete ke sini agar overlay modal menutupi sidebar --}}
+    <x-confirm-delete />
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const deleteButtons = document.querySelectorAll('.delete-button');

@@ -9,6 +9,8 @@ use App\Http\Controllers\DaftarMenuController;
 use App\Http\Controllers\DaftarDeveloperController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ScreenFormatController;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
@@ -80,20 +82,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/developers/{id}', [DaftarDeveloperController::class, 'destroy'])
         ->name('developers.destroy');
 
-    // TEST CASES
-    Route::get('/test-cases', [ManajemenTestingController::class, 'index'])
-        ->name('test-cases.index');
-    Route::get('/test-cases/create', [ManajemenTestingController::class, 'create'])
-        ->name('test-cases.create');
-    Route::post('/test-cases', [ManajemenTestingController::class, 'store'])
-        ->name('test-cases.store');
-    Route::get('/test-cases/{id}/edit', [ManajemenTestingController::class, 'edit'])
-        ->name('test-cases.edit');
-    Route::put('/test-cases/{id}', [ManajemenTestingController::class, 'update'])
-        ->name('test-cases.update');
-    Route::delete('/test-cases/{id}', [ManajemenTestingController::class, 'destroy'])
-        ->name('test-cases.destroy');
-
     // TEST CASES BARU
     Route::get('/test-cases-new', [ManajemenTestingBaruController::class, 'index'])
         ->name('test-cases-new.index');
@@ -108,8 +96,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/test-cases-new/{id}', [ManajemenTestingBaruController::class, 'destroy'])
         ->name('test-cases-new.destroy');
 
+    // Screen Format
+    Route::get('/screen-format', [ScreenFormatController::class, 'index'])
+        ->name('screen-format.index');
+    Route::get('/screen-format/create', [ScreenFormatController::class, 'create'])
+        ->name('screen-format.create');
+    Route::post('/screen-format', [ScreenFormatController::class, 'store'])
+        ->name('screen-format.store');
+    Route::get('/screen-format/{id}/edit', [ScreenFormatController::class, 'edit'])
+        ->name('screen-format.edit');
+    Route::put('/screen-format/{id}', [ScreenFormatController::class, 'update'])
+        ->name('screen-format.update');
+    Route::delete('/screen-format/{id}', [ScreenFormatController::class, 'destroy'])
+        ->name('screen-format.destroy');
+    Route::get('/api/appmenu/search', [ScreenFormatController::class, 'searchappmenu'])
+        ->name('appmenu.search');
+    Route::get('/api/menus/search', [ScreenFormatController::class, 'searchMenus'])
+        ->name('menus.search');
+
     // LAPORAN & STATISTIK
-    Route::get('/laporan-statistik', [\App\Http\Controllers\LaporanController::class, 'index'])
+    Route::get('/laporan-statistik', [LaporanController::class, 'index'])
         ->name('laporan-statistik.index');
 });
 
