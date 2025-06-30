@@ -34,24 +34,24 @@
         </div>
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Edit Menu</h1>
+                <h1 class="text-2xl font-bold">Daftar Menu</h1>
             </div>
             <form method="POST" action="{{ route('menus.update', $menus->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="menu_name" class="block text-sm font-medium text-gray-700">Menu Name</label>
+                    <label for="menu_name" class="block text-sm font-medium text-gray-700">Nama Menu</label>
                     <input type="text" name="menu_name" id="menu_name" value="{{ $menus->menu_name }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     @error('menu_name')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label for="menu_description" class="block text-sm font-medium text-gray-700">Menu Description</label>
+                    <label for="menu_description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <textarea name="menu_description" id="menu_description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ $menus->menu_description }}</textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="application_id" class="block text-sm font-medium text-gray-700">Application</label>
+                    <label for="application_id" class="block text-sm font-medium text-gray-700">Aplikasi</label>
                     <select name="application_id" id="application_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Pilih Aplikasi</option>
                         @foreach($applications as $application)
@@ -63,7 +63,7 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <label for="modul_id" class="block text-sm font-medium text-gray-700">Module</label>
+                    <label for="modul_id" class="block text-sm font-medium text-gray-700">Modul</label>
                     <select name="modul_id" id="modul_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Pilih Modul</option>
                         @foreach($modules as $module)
@@ -76,7 +76,7 @@
                 </div>
                 <div id="version-info" class="mb-4 text-sm text-gray-700"></div>
                 <div class="mb-4">
-                    <label for="menu_status" class="block text-sm font-medium text-gray-700">Menu Status</label>
+                    <label for="menu_status" class="block text-sm font-medium text-gray-700">Status Menu</label>
                     <select name="menu_status" id="menu_status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="Not Started" {{ $menus->menu_status == 'Not Started' ? 'selected' : '' }}>Not Started</option>
                         <option value="On Progress" {{ $menus->menu_status == 'On Progress' ? 'selected' : '' }}>On Progress</option>
@@ -84,7 +84,12 @@
                     </select>
                 </div>
                 <div class="flex justify-end space-x-2">
-                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Update</button>
+                    <button type="submit" class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75" />
+                        </svg>
+                        Simpan
+                    </button>
                 </div>
             </form>
         </div>

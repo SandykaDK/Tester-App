@@ -33,19 +33,19 @@
             <a href="{{ route('applications.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700">Kembali</a>
         </div>
         <div class="bg-white shadow-md rounded-lg p-6">
-            <h1 class="text-2xl font-bold mb-4">Create Application</h1>
+            <h1 class="text-2xl font-bold mb-4">Daftar Aplikasi</h1>
             <form method="POST" action="{{ route('applications.store') }}">
                 @csrf
                 <div class="mb-4">
-                    <label for="app_name" class="block text-sm font-medium text-gray-700">Application Name</label>
+                    <label for="app_name" class="block text-sm font-medium text-gray-700">Nama Aplikasi</label>
                     <input type="text" name="app_name" id="app_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div class="mb-4">
-                    <label for="app_description" class="block text-sm font-medium text-gray-700">Application Description</label>
+                    <label for="app_description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <textarea name="app_description" id="app_description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="app_status" class="block text-sm font-medium text-gray-700">Application Status</label>
+                    <label for="app_status" class="block text-sm font-medium text-gray-700">Status Aplikasi</label>
                     <select name="app_status" id="app_status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="Not Started">Not Started</option>
                         <option value="On Progress">On Progress</option>
@@ -53,7 +53,7 @@
                     </select>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Create</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Simpan</button>
                 </div>
             </form>
         </div>

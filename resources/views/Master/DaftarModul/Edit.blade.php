@@ -34,21 +34,21 @@
         </div>
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Edit Module</h1>
+                <h1 class="text-2xl font-bold">Daftar Modul</h1>
             </div>
             <form method="POST" action="{{ route('modules.update', $module->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="modul_name" class="block text-sm font-medium text-gray-700">Module Name</label>
+                    <label for="modul_name" class="block text-sm font-medium text-gray-700">Nama Modul</label>
                     <input type="text" name="modul_name" id="modul_name" value="{{ $module->modul_name }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div class="mb-4">
-                    <label for="modul_description" class="block text-sm font-medium text-gray-700">Module Description</label>
+                    <label for="modul_description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <textarea name="modul_description" id="modul_description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ $module->modul_description }}</textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="application_id" class="block text-sm font-medium text-gray-700">Application</label>
+                    <label for="application_id" class="block text-sm font-medium text-gray-700">Aplikasi</label>
                     <select name="application_id" id="application_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         @foreach($applications as $application)
                             <option value="{{ $application->id }}" {{ $module->application_id == $application->id ? 'selected' : '' }}>{{ $application->app_name }}</option>
@@ -56,7 +56,7 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="modul_status" class="block text-sm font-medium text-gray-700">Module Status</label>
+                    <label for="modul_status" class="block text-sm font-medium text-gray-700">Status Modul</label>
                     <select name="modul_status" id="modul_status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="Not Started" {{ $module->modul_status == 'Not Started' ? 'selected' : '' }}>Not Started</option>
                         <option value="On Progress" {{ $module->modul_status == 'On Progress' ? 'selected' : '' }}>On Progress</option>

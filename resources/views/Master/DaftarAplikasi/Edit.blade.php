@@ -34,21 +34,21 @@
         </div>
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Edit Application</h1>
+                <h1 class="text-2xl font-bold">Daftar Aplikasi</h1>
             </div>
             <form method="POST" action="{{ route('applications.update', $application->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="app_name" class="block text-sm font-medium text-gray-700">Application Name</label>
+                    <label for="app_name" class="block text-sm font-medium text-gray-700">Nama Aplikasi</label>
                     <input type="text" name="app_name" id="app_name" value="{{ $application->app_name }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <div class="mb-4">
-                    <label for="app_description" class="block text-sm font-medium text-gray-700">Application Description</label>
+                    <label for="app_description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <textarea name="app_description" id="app_description" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ $application->app_description }}</textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="app_status" class="block text-sm font-medium text-gray-700">Application Status</label>
+                    <label for="app_status" class="block text-sm font-medium text-gray-700">AStatus Aplikasi</label>
                     <select name="app_status" id="app_status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="Not Started" {{ $application->app_status == 'Not Started' ? 'selected' : '' }}>Not Started</option>
                         <option value="On Progress" {{ $application->app_status == 'On Progress' ? 'selected' : '' }}>On Progress</option>
